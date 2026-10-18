@@ -1,0 +1,89 @@
+# Default configuration for the Video & Image Enhancer AI
+# Override any value via CLI flags or environment variables.
+
+pipeline:
+  target_width: 3840
+  target_height: 2160
+  preserve_aspect: true
+  stabilize: true
+
+modes:
+  conservative:
+    sharpen_amount: 0.2
+    denoise_strength: 0.4
+    temporal_smoothing: 0.5
+    aggressive: false
+    hallucination_tolerance: 0.05
+
+  balanced:
+    sharpen_amount: 0.5
+    denoise_strength: 0.5
+    temporal_smoothing: 0.4
+    aggressive: false
+    hallucination_tolerance: 0.10
+
+  quality:
+    sharpen_amount: 0.7
+    denoise_strength: 0.6
+    temporal_smoothing: 0.4
+    aggressive: false
+    hallucination_tolerance: 0.15
+
+  fast:
+    sharpen_amount: 0.3
+    denoise_strength: 0.3
+    temporal_smoothing: 0.2
+    aggressive: false
+    hallucination_tolerance: 0.15
+
+  forensics:
+    sharpen_amount: 0.0
+    denoise_strength: 0.3
+    temporal_smoothing: 0.0
+    aggressive: false
+    hallucination_tolerance: 0.01
+
+models:
+  image_sr:
+    num_features: 64
+    num_blocks: 16
+    scale: 4
+
+  video_sr:
+    num_features: 64
+    num_blocks: 12
+    scale: 4
+    num_frames: 5
+
+  deblur:
+    base_features: 32
+
+  denoiser:
+    num_features: 64
+    num_layers: 15
+
+training:
+  image_sr:
+    lr: 2.0e-4
+    epochs: 100
+    batch_size: 8
+    patch_size: 128
+    l1_weight: 1.0
+    perceptual_weight: 0.1
+    ssim_weight: 0.5
+    scheduler: cosine_annealing
+
+  video_sr:
+    lr: 1.0e-4
+    epochs: 50
+    batch_size: 4
+    temporal_weight: 0.2
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  max_upload_mb: 500
+
+ui:
+  port: 7860
+  share: false
